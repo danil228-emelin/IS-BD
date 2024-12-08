@@ -109,3 +109,14 @@ CREATE TABLE IF NOT EXISTS incidents (
     occurrence_date TIMESTAMP NOT NULL,
     CONSTRAINT fk_cargo_incident FOREIGN KEY (cargo_oid) REFERENCES cargoes(id) ON DELETE CASCADE
 );
+
+
+-- Create a log table for cargo status changes
+CREATE TABLE IF NOT EXISTS cargo_status_log (
+    id SERIAL PRIMARY KEY,
+    cargo_oid INTEGER NOT NULL,
+    old_status VARCHAR(63) NOT NULL,
+    new_status VARCHAR(63) NOT NULL,
+    change_time TIMESTAMP DEFAULT NOW(),
+    CONSTRAINT fk_cargo FOREIGN KEY (cargo_oid) REFERENCES cargoes(id) ON DELETE CASCADE
+);
